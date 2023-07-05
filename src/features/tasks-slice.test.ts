@@ -6,6 +6,7 @@ describe('tasksSlice', () => {
       createTask({ title: 'Write tests' }),
       createTask({ title: 'Make them pass' }),
     ],
+    loading: false,
   };
 
   it(`should add a task when the ${addTask}`, () => {

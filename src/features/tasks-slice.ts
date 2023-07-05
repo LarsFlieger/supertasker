@@ -7,6 +7,7 @@ import {
 
 export type TasksState = {
   entities: Task[];
+  loading: boolean;
 };
 
 type DraftTask = RequireOnly<Task, 'title'>;
@@ -17,6 +18,7 @@ export const createTask = (draftTask: DraftTask): Task => {
 
 const initialState: TasksState = {
   entities: [],
+  loading: false,
 };
 
 export const fetchTasks = createAsyncThunk(
@@ -44,7 +46,12 @@ const tasksSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchTasks.pending, (state) => {
+      state.loading = true;
+    });
+
     builder.addCase(fetchTasks.fulfilled, (state, action) => {
+      state.loading = false;
       state.entities = action.payload;
     });
   },
